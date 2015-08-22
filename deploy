@@ -1,0 +1,45 @@
+#!/bin/bash
+user="$1"
+site="$2"
+root=/srv/sunday-school
+
+echo "Обновление сайта $site пользователя $user..."
+
+if test "$user" = "school"; then
+    base="$root"
+else
+    base="$root/students/$user"
+fi
+
+if ! test -d "$base"; then
+    echo "User $user does not exist."
+    exit 1
+fi
+
+dir="$base/$site"
+
+if ! test -d "$dir"; then
+    echo "Site $site not found in $user's directory."
+    exit 1
+fi
+
+cd "$dir"
+
+echo
+echo
+echo "--- Перед обновлением последний коммит такой: ---"
+echo
+git log -1
+
+echo
+echo
+echo "--- Загрузка новых коммитов с GitHub ---"
+echo
+git pull
+
+echo
+echo
+echo "--- Готово. Теперь последний коммит такой: ---"
+echo
+git log -1
+echo
