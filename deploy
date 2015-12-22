@@ -6,7 +6,7 @@ root=/srv/sunday-school
 echo "Обновление сайта $site пользователя $user..."
 
 if test "$user" = "school"; then
-    base="$root"
+    base="$root/sites"
 else
     base="$root/students/$user"
 fi
